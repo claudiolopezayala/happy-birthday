@@ -1,54 +1,42 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Fader from './components/Fader';
+import ElementsArray from './components/ElementsArray';
 
-const delay = (ms:number) => new Promise(
-  resolve => setTimeout(resolve, ms)
-);
 
-function First (){
-return(
-  <h1>First Element</h1>
-  );
-}
-  
-function Second (){
-return(
-  <h2>Second Element</h2>
-  );
-}
-
-function Third (){
-  return(
-    <h3>Third Element</h3>
-    );
-  }
-
-const elements: ReactElement[] =  [];
-
-elements.push(First());
-elements.push(Second());
-elements.push(Third());
+let indexOfdisplayedElement = 1;
 
 function App() {
   const [elementToDisplayProp, setElementToDisplayProp] = useState({
-    element: elements[0]
+    element: ElementsArray[0]
   })
 
-  useEffect(()=>{
-    async function changeElemetToShow() {
-      await delay(5000);
-      setElementToDisplayProp({
-        element: elements[2]
-      });
-    }
-    changeElemetToShow();
-  },[elementToDisplayProp]);
+  function showNextElement(){
+    setElementToDisplayProp({
+      element: ElementsArray[indexOfdisplayedElement]
+    });
+    indexOfdisplayedElement ++;
+  }
 
   return (
     <div className="App">
-      <Fader elementToDisplay={elementToDisplayProp.element}/>
-      <Fader elementToDisplay={elements[1]}/>
+      <div className='Fader'>
+        <Fader elementToDisplay={elementToDisplayProp.element} finishedShowElement={showNextElement}/>
+      </div>
+      <div className='background'>
+        <div className='circles'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
     </div>
   );
 }

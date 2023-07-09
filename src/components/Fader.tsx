@@ -4,6 +4,7 @@ import '../App.css';
 interface FaderProps {
     timeToFadeIn?: number;
     timeToFadeOut?: number;
+    finishedShowElement: Function;
     elementToDisplay: ReactElement;
 }
 
@@ -11,7 +12,7 @@ const delay = (ms:number) => new Promise(
     resolve => setTimeout(resolve, ms)
   );
 
-const Fader = ({ elementToDisplay, timeToFadeOut = 4000, timeToFadeIn = 2000 }: FaderProps) =>{
+const Fader = ({ elementToDisplay, timeToFadeOut = 4000, timeToFadeIn = 500, finishedShowElement }: FaderProps) =>{
 
     const [fadeProp, setFadeProp] = useState({
         fade: 'fade-off',
@@ -25,6 +26,7 @@ const Fader = ({ elementToDisplay, timeToFadeOut = 4000, timeToFadeIn = 2000 }: 
             setFadeProp({
                 fade: 'fade-off'
             })
+            prevElementToDisplay.current = elementToDisplayProp;
         }
 
         async function handleFades() {
@@ -38,12 +40,13 @@ const Fader = ({ elementToDisplay, timeToFadeOut = 4000, timeToFadeIn = 2000 }: 
                 setFadeProp({
                     fade: 'fade-out'
                 });
+                await delay(500);
+                finishedShowElement();
             }
         }
         handleFades();
-        prevElementToDisplay.current = elementToDisplayProp;
 
-    }, [fadeProp,timeToFadeIn,timeToFadeOut,elementToDisplay,elementToDisplayProp]);
+    }, [fadeProp, timeToFadeIn, timeToFadeOut, elementToDisplay, elementToDisplayProp, finishedShowElement]);
 
     return (
         <div className={fadeProp.fade}>
