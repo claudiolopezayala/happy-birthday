@@ -1,4 +1,4 @@
-export default function ThirdElementElement (){
+export default function ThirdElement (){
     return(
         <>
         <h1>

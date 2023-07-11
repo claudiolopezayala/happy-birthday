@@ -8,20 +8,26 @@ let indexOfdisplayedElement = 1;
 
 function App() {
   const [elementToDisplayProp, setElementToDisplayProp] = useState({
-    element: ElementsArray[0]
+    element: ElementsArray[0].element
+  })
+  const [timeToFadeOutProp, setTimeToFadeOutProp] = useState({
+    timeToFadeOut : ElementsArray[0].showingTime
   })
 
   function showNextElement(){
     setElementToDisplayProp({
-      element: ElementsArray[indexOfdisplayedElement]
+      element: ElementsArray[indexOfdisplayedElement].element
     });
-    indexOfdisplayedElement ++;
+    setTimeToFadeOutProp({
+      timeToFadeOut: ElementsArray[indexOfdisplayedElement].showingTime
+    })
+    indexOfdisplayedElement = (indexOfdisplayedElement < ElementsArray.length - 1) ? indexOfdisplayedElement + 1 : 0;
   }
 
   return (
     <div className="App">
       <div className='Fader'>
-        <Fader elementToDisplay={elementToDisplayProp.element} finishedShowElement={showNextElement}/>
+        <Fader elementToDisplay={elementToDisplayProp.element} finishedShowElement={showNextElement} timeToFadeOut={timeToFadeOutProp.timeToFadeOut}/>
       </div>
       <div className='background'>
         <div className='circles'>
