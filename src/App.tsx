@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Fader from './components/Fader';
 import ElementsArray from './components/ElementsArray';
@@ -7,6 +7,12 @@ import ElementsArray from './components/ElementsArray';
 let indexOfdisplayedElement = 1;
 
 function App() {
+
+  
+  useEffect(() => {
+    document.title = 'Feliz cumpleaños';
+  }, []);
+
   const [elementToDisplayProp, setElementToDisplayProp] = useState({
     element: ElementsArray[0].element
   })
